@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0F172A">
+  <title>달빛 우체국 · 한가위 초대장</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Pretendard:wght@400;600;800&display=swap');
+
+    :root {
+      --bg-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      --card-cream: #fdfbf7;
+      --card-border: #e2d8c3;
+      --gold-primary: #eab308;
+      --gold-dark: #b45309;
+      --gold-gradient: linear-gradient(135deg, #fde047 0%, #eab308 50%, #ca8a04 100%);
+      --indigo-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --wood-border: #6c3b14;
+      --board-bg: #1e293b;
+      --green: #15803d;
+      --error: #b91c1c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b0f19;
+      color: #f8fafc;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.5;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* 모바일 쉘 컨테이너 */
+    .phone-shell {
+      width: min(100%, 620px);
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    /* 상단 날짜 및 상태 바 */
+    .top-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      background: rgba(15, 23, 42, 0.85);
+      font-size: 0.85rem;
+      color: #fde047;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .top-status-bar a { color: inherit; text-decoration: none; font-weight: 700; }
+
+    /* 메인 컨텐츠 영역 */
+    main {
+      flex: 1;
+      padding: 20px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* 1. 히어로 영역 (칠판 & 나무 프레임) */
+    .hero-board {
+      background: var(--board-bg);
+      border: 6px solid var(--wood-border);
+      border-radius: 16px;
+      padding: 16px 12px 20px;
+      position: relative;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 8px 20px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    /* 랄라스타즈 캐릭터 라인업 */
+    .mascot-lineup {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 8px;
+      min-height: 80px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .mascot-item { font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+    .moon-bg {
+      position: absolute;
+      top: -5px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+      background: #fef08a;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #fef08a;
+    }
+    .postbox-obj {
+      position: absolute;
+      top: 10px;
+      right: 65px;
+      font-size: 1.4rem;
+    }
+
+    /* 상단 뱃지 */
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 6px;
+    }
+    .hero-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fef08a;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(254, 240, 138, 0.3);
+    }
+
+    /* 메인 타이틀 */
+    .hero-title {
+      font-family: 'Gowun Batang', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #fdfbf7;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 4px;
+      word-break: keep-all;
+    }
+    .hero-title span { color: var(--gold-primary); }
+    .hero-sub { font-size: 0.88rem; color: #cbd5e1; font-weight: 400; }
+
+    /* 2. 한지 전통 코너 프레임 카드 */
+    .hanji-card {
+      background: var(--card-cream);
+      border: 2px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      color: var(--text-main);
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    /* 모서리 전통 문양 (SVG) */
+    .trad-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      color: #d4af37;
+      pointer-events: none;
+    }
+    .corner-tl { top: 8px; left: 8px; }
+    .corner-tr { top: 8px; right: 8px; transform: rotate(90deg); }
+    .corner-bl { bottom: 8px; left: 8px; transform: rotate(-90deg); }
+    .corner-br { bottom: 8px; right: 8px; transform: rotate(180deg); }
+
+    /* 미션 입력 폼 & 컴포넌트 */
+    .form-header { text-align: center; font-weight: 700; font-size: 1.05rem; color: #0f172a; margin-bottom: 14px; }
+    .code-input, .mission-input {
+      width: 100%;
+      height: 52px;
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 0 16px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 10px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .code-input { text-align: center; }
+    .code-input:focus, .mission-input:focus {
+      border-color: var(--gold-dark);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+    }
+    .input-notice { text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* CTA 버튼 스타일 */
+    .btn-group { display: flex; flex-direction: column; gap: 10px; }
+    .btn-trad {
+      width: 100%;
+      height: 54px;
+      border-radius: 9999px;
+      border: none;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.1s ease, filter 0.2s;
+    }
+    .btn-trad:active { transform: scale(0.98); }
+    .btn-gold { background: var(--gold-gradient); color: #422006; }
+    .btn-indigo { background: var(--indigo-gradient); color: #f8fafc; border: 1px solid rgba(255,255,255,0.1); }
+    .btn-icon-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+    .btn-indigo .btn-icon-badge { background: rgba(255,255,255,0.1); }
+
+    /* 코스 선택 카드 (Routes) */
+    .route-card {
+      background: #fff;
+      border: 2px solid var(--card-border);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      padding: 16px 18px;
+      transition: all 0.2s;
+    }
+    .route-card.unlocked { cursor: pointer; }
+    .route-card.unlocked:hover { border-color: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .route-card.locked { opacity: 0.65; background: #f1f5f9; cursor: not-allowed; }
+    .route-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .route-title { font-weight: 800; font-size: 1.05rem; color: #0f172a; }
+    .status-badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
+    .status-badge.completed { background: #dcfce7; color: #15803d; }
+    .status-badge.available { background: #fef9c3; color: #a16207; }
+    .status-badge.locked { background: #e2e8f0; color: #64748b; }
+
+    /* 객관식 선택 버튼 */
+    .choice-group { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+    .choice-btn {
+      background: #fff;
+      border: 2px solid #cbd5e1;
+      padding: 14px 16px;
+      border-radius: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .choice-btn:hover { border-color: var(--gold-dark); background: #fefce8; }
+    .choice-btn.selected { border-color: #0f172a; background: #0f172a; color: #fde047; }
+
+    /* 피드백 & 힌트 */
+    .feedback { padding: 12px 16px; border-radius: 10px; margin: 12px 0; font-size: 0.9rem; font-weight: 700; display: none; }
+    .feedback.error { display: block; background: #fee2e2; color: var(--error); border: 1px solid #fca5a5; }
+    .feedback.success { display: block; background: #dcfce7; color: var(--green); border: 1px solid #86efac; }
+    .hint-box { background: #fefce8; border: 1px dashed var(--gold-dark); padding: 14px; border-radius: 12px; margin-top: 12px; font-size: 0.88rem; color: #78350f; }
+
+    /* 스탬프 도장 UI */
+    .stamp-box {
+      margin: 20px auto;
+      width: 170px;
+      min-height: 180px;
+      border: 3px dashed var(--gold-dark);
+      border-radius: 20px;
+      background: #fefce8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      box-shadow: inset 0 0 15px rgba(234, 179, 8, 0.15);
+    }
+    .stamp-icon { font-size: 3.2rem; margin-bottom: 6px; }
+    .stamp-title { font-weight: 800; font-size: 1.05rem; color: #0f172a; }
+
+    /* 완성된 초대장 스티커 그룹 */
+    .sticker-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+    .sticker-item {
+      background: #fff;
+      border: 1px dashed var(--card-border);
+      border-radius: 12px;
+      padding: 12px 6px;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: 85px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .sticker-item.active { border: 2px solid var(--gold-dark); background: #fefce8; color: #78350f; }
+    .sticker-item .icon { font-size: 1.8rem; margin-bottom: 4px; }
+
+    /* 하단 레퍼런스 및 푸터 */
+    .ref-text-box { margin-top: 16px; text-align: center; font-size: 0.82rem; color: #94a3b8; }
+    .ref-text-box strong { color: #fde047; }
+    
+    .site-footer {
+      padding: 14px 20px;
+      background: #090d16;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #64748b;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .btn-reset { background: none; border: none; color: #94a3b8; text-decoration: underline; cursor: pointer; }
+
+    /* 다이얼로그 모달 */
+    dialog { border: none; border-radius: 20px; padding: 24px; max-width: 440px; width: 90%; background: var(--card-cream); color: var(--text-main); margin: auto; box-shadow: 0 20px 30px rgba(0,0,0,0.5); }
+    dialog::backdrop { background: rgba(15, 23, 42, 0.75); }
+    .dialog-btns { display: flex; gap: 10px; margin-top: 20px; }
+
+    .btn-text-back { background: none; border: none; color: var(--text-muted); font-weight: 700; font-size: 0.9rem; cursor: pointer; padding: 4px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="phone-shell">
+    <!-- 상단 날짜 및 브랜드 헤더 -->
+    <header class="top-status-bar">
+      <a href="#" id="brand-link">달빛 우체국 · 한가위 초대장</a>
+      <span id="current-date-time">2026. 9. 20. 오전 11:00</span>
+    </header>
+
+    <!-- 동적 미션 화면 출력 영역 -->
+    <main id="main-content">
+      <!-- JavaScript dynamic view rendering -->
+    </main>
+
+    <!-- 하단 푸터 -->
+    <footer class="site-footer">
+      <span>문경에코월드 · 탄광사택촌</span>
+      <button type="button" id="reset-button" class="btn-reset">처음부터 다시 보기</button>
+    </footer>
+  </div>
+
+  <!-- 초기화 모달 다이얼로그 -->
+  <dialog id="reset-dialog">
+    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">처음부터 다시 볼까요?</h3>
+    <p style="font-size: 0.9rem; color: #64748b;">이 기기에 저장된 미션 수행 기록이 초기화됩니다.</p>
+    <div class="dialog-btns">
+      <button type="button" id="reset-cancel" class="btn-trad btn-indigo" style="height: 44px; font-size: 0.95rem; justify-content: center;">계속 이어서 하기</button>
+      <button type="button" id="reset-confirm" class="btn-trad btn-gold" style="height: 44px; font-size: 0.95rem; justify-content: center;">기록 초기화</button>
+    </div>
+  </dialog>
+
+  <script>
+    // 1. 미션 데이터 (첨부파일 gemini-code 기반)
+    const MOON_MISSIONS = [
+      {
+        id: 1,
+        title: "1코스: 탄광사택촌 탐방",
+        subtitle: "옛 은성광업소 사택에서 발견된 암호",
+        type: "text",
+        question: "탄광사택촌 입구 현판에 적힌 과거 이 지역 광산의 이름을 입력하세요.",
+        placeholder: "예: 은성광업소",
+        answers: ["은성광업소", "은성탄광", "은성"],
+        hint: "문경에코월드 석탄박물관 부지에 위치했던 역사적인 탄광 명칭입니다. '은성' 두 글자가 포함됩니다.",
+        stampName: "탄광의 기억",
+        stampIcon: "🪵"
+      },
+      {
+        id: 2,
+        title: "2코스: 한가위 단서 찾기",
+        subtitle: "사택 내부 상차림 단서 비교",
+        type: "choice",
+        question: "한가위 상차림 전시에서 발견한 가을 결실 중 '달빛의 풍요'를 상징하는 과일은 무엇일까요?",
+        options: ["1. 붉게 익은 감", "2. 싱싱한 사과", "3. 고소한 밤", "4. 탐스러운 대추"],
+        correctIndex: 0,
+        hint: "주황색으로 익어가는 가을의 대표 과실로 사택 뜰 앞 나무에도 걸려있습니다.",
+        stampName: "한가위 결실",
+        stampIcon: "柿"
+      },
+      {
+        id: 3,
+        title: "3코스: 초대장 완성",
+        subtitle: "달빛 우체국 최종 암호 조합",
+        type: "text",
+        question: "우체통 옆 초대장의 마지막 빈칸에 들어갈 단어는 무엇일까요? '풍성한 (     ) 아래 온 가족이 모여라!'",
+        placeholder: "예: 보름달",
+        answers: ["보름달", "달님", "한가위보름달"],
+        hint: "추석 밤하늘을 밝게 비추는 가장 크고 둥근 달입니다.",
+        stampName: "달빛 초대장",
+        stampIcon: "🌕"
+      }
+    ];
+
+    // 2. 상태 관리 (Local Storage 동기화)
+    const STORAGE_KEY = 'moon_post_office_progress_2026';
+    let state = {
+      view: 'home', // 'home' | 'routes' | 'mission' | 'stamp' | 'complete'
+      currentMissionId: 1,
+      completedMissions: [],
+      selectedChoice: null
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+            state.completedMissions = Array.isArray(parsed.completedMissions)
+              ? parsed.completedMissions
+              : [];
+        }
+      } catch (e) {
+        console.error("스토리지 로드 오류", e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          completedMissions: state.completedMissions
+        }));
+      } catch (e) {
+        console.error("스토리지 저장 오류", e);
+      }
+    }
+
+    const mainEl = document.getElementById('main-content');
+
+    function navigateTo(view, params = {}) {
+      state.view = view;
+      if (params.missionId) state.currentMissionId = params.missionId;
+      state.selectedChoice = null;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 모서리 전통 문양 SVG 공통 템플릿
+    const TRAD_CORNERS_SVG = `
+      <svg class="trad-corner corner-tl" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v2H4v6H2V2zm4 4h4v2H8v2H6V6z"/></svg>
+      <svg class="trad-corner corner-tr" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v2H4v6H2V2zm4 4h4v2H8v2H6V6z"/></svg>
+      <svg class="trad-corner corner-bl" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v2H4v6H2V2zm4 4h4v2H8v2H6V6z"/></svg>
+      <svg class="trad-corner corner-br" viewBox="0 0 24 24" fill="currentColor"><path d="M2 2h8v2H4v6H2V2zm4 4h4v2H8v2H6V6z"/></svg>
+    `;
+
+    // 3. 화면 렌더링 로직
+    function render() {
+      switch (state.view) {
+        case 'home': renderHome(); break;
+        case 'routes': renderRoutes(); break;
+        case 'mission': renderMission(state.currentMissionId); break;
+        case 'stamp': renderStamp(state.currentMissionId); break;
+        case 'complete': renderComplete(); break;
+        default: renderHome();
+      }
+    }
+
+    /* --- [1] 메인 홈 (Hero + 코드 입력 폼) --- */
+    function renderHome() {
+      const hasProgress = state.completedMissions.length > 0;
+
+      mainEl.innerHTML = `
+        <div class="hero-board">
+          <div class="moon-bg"></div>
+          <div class="postbox-obj">📮</div>
+          <div class="mascot-lineup">
+            <span class="mascot-item">🍇</span>
+            <span class="mascot-item">🐱</span>
+            <span class="mascot-item">🐥</span>
+            <span class="mascot-item">🐰</span>
+            <span class="mascot-item">🐻</span>
+          </div>
+          <div class="badge-row">
+            <span class="hero-badge">2026 추석 문경에코월드</span>
+            <span class="hero-badge">문경에코월드 랄라스타즈</span>
+          </div>
+          <h1 class="hero-title">달빛 우체국 <span>·</span> 한가위 초대장</h1>
+          <p class="hero-sub">전시 속 단서를 찾아 가족의 마음을 모아주세요.</p>
+        </div>
+
+        <div class="hanji-card">
+          ${TRAD_CORNERS_SVG}
+          <div class="form-header">책자에 적힌 게임코드를 입력해 주세요.</div>
+          <input type="text" id="code-input" class="code-input" placeholder="예: DAL-2026" spellcheck="false" />
+          <div class="input-notice">영문 대소문자와 하이픈은 구분하지 않아요.</div>
+
+          <div class="btn-group">
+            <button type="button" id="btn-submit-code" class="btn-trad btn-gold">
+              <span class="btn-icon-badge">☸</span>
+              <span>달빛 집배원, 출발!</span>
+              <span class="btn-icon-badge">☸</span>
+            </button>
+            <button type="button" id="btn-start-direct" class="btn-trad btn-indigo">
+              <span class="btn-icon-badge">☸</span>
+              <span>${hasProgress ? '이어서 미션 수행하기' : '미션 코스 둘러보기'}</span>
+              <span class="btn-icon-badge">☸</span>
+            </button>
+          </div>
+
+          <div class="ref-text-box">
+            미션으로 바로가기 코드 <strong>DAL-2026</strong><br>
+            현장에서 발급한 코드는 아니에요.
+          </div>
+        </div>
+      `;
+
+      // '달빛 집배원, 출발!' 클릭 시 (코드 검증 후 코스 선택/미션지로 이동)
+      document.getElementById('btn-submit-code').addEventListener('click', () => {
+        const input = document.getElementById('code-input');
+        const rawVal = input.value.trim();
+        const cleanVal = rawVal.replace(/-/g, '').toUpperCase();
+
+        if (!rawVal) {
+          alert('미션 코드를 입력해 주세요. (예: DAL-2026)');
+          input.focus();
+          return;
+        }
+
+          if (cleanVal !== 'DAL2026') {
+            alert('미션 코드가 올바르지 않습니다. (예: DAL-2026)');
+            input.focus();
+            return;
+          }
+
+        alert(`[${rawVal}] 코드가 확인되었습니다!\n달빛 집배원 미션을 시작합니다.`);
+        navigateTo('routes');
+      });
+
+      // '미션 코스 둘러보기 / 이어서 하기' 클릭 시
+      document.getElementById('btn-start-direct').addEventListener('click', () => {
+        navigateTo('routes');
+      });
+    }
+
+    /* --- [2] 미션 코스 선택 화면 --- */
+    function renderRoutes() {
+      const allCompleted = MOON_MISSIONS.every(m => state.completedMissions.includes(m.id));
+
+      let cardsHtml = MOON_MISSIONS.map((m, index) => {
+        const isCompleted = state.completedMissions.includes(m.id);
+        const isUnlocked = index === 0 || state.completedMissions.includes(MOON_MISSIONS[index - 1].id);
+        
+        let statusTag = `<span class="status-badge locked">잠김</span>`;
+        if (isCompleted) statusTag = `<span class="status-badge completed">완료됨</span>`;
+        else if (isUnlocked) statusTag = `<span class="status-badge available">도전 가능</span>`;
+
+        return `
+          <div class="route-card ${isUnlocked ? 'unlocked' : 'locked'}" data-id="${m.id}" data-unlocked="${isUnlocked}">
+            <div class="route-header">
+              <span class="route-title">${m.title}</span>
+              ${statusTag}
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-muted);">${m.subtitle}</div>
+          </div>
+        `;
+      }).join('');
+
+      mainEl.innerHTML = `
+        <div class="hanji-card">
+          ${TRAD_CORNERS_SVG}
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <button type="button" class="btn-text-back" id="back-home-btn">← 메인 홈으로</button>
+            <span style="font-size: 0.82rem; font-weight: 700; color: var(--gold-dark);">달빛 탐방 코스</span>
+          </div>
+          <h2 style="font-family: 'Gowun Batang', serif; font-size: 1.4rem; color: #0f172a; margin-bottom: 6px;">미션 코스 선택</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px;">순서대로 코스를 탐방하며 스탬프를 획득하세요.</p>
+
+          <div class="route-list">${cardsHtml}</div>
+
+          ${allCompleted ? `
+            <div style="margin-top: 18px;">
+              <button type="button" class="btn-trad btn-gold" id="view-complete-btn" style="justify-content: center;">
+                <span>🎉 완성된 초대장 확인하기</span>
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      document.getElementById('back-home-btn').addEventListener('click', () => navigateTo('home'));
+
+      document.querySelectorAll('.route-card.unlocked').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = parseInt(card.getAttribute('data-id'), 10);
+          navigateTo('mission', { missionId: id });
+        });
+      });
+
+      if (allCompleted) {
+        document.getElementById('view-complete-btn').addEventListener('click', () => navigateTo('complete'));
+      }
+    }
+
+    /* --- [3] 미션지 문제 풀이 화면 --- */
+    function renderMission(id) {
+      const mission = MOON_MISSIONS.find(m => m.id === id);
+      if (!mission) return navigateTo('routes');
+
+      let inputFormHtml = '';
+      if (mission.type === 'text') {
+        inputFormHtml = `
+          <input type="text" id="mission-input" class="mission-input" placeholder="${mission.placeholder}" autocomplete="off" />
+        `;
+      } else if (mission.type === 'choice') {
+        inputFormHtml = `
+          <div class="choice-group">
+            ${mission.options.map((opt, i) => `
+              <button type="button" class="choice-btn" data-index="${i}">${opt}</button>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      mainEl.innerHTML = `
+        <div class="hanji-card">
+          ${TRAD_CORNERS_SVG}
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <button type="button" class="btn-text-back" id="back-routes-btn">← 코스 목록</button>
+            <span style="font-size: 0.85rem; font-weight: 800; color: var(--gold-dark);">${mission.id} / ${MOON_MISSIONS.length} 단계</span>
+          </div>
+
+          <h2 style="font-family: 'Gowun Batang', serif; font-size: 1.35rem; color: #0f172a; margin-bottom: 6px;">${mission.title}</h2>
+          <p style="font-size: 0.98rem; font-weight: 700; color: #334155; margin-bottom: 18px;">${mission.question}</p>
+
+          <form id="mission-form" onsubmit="return false;">
+            ${inputFormHtml}
+            <div id="feedback-msg" class="feedback"></div>
+            <button type="submit" class="btn-trad btn-gold" style="justify-content: center; margin-top: 10px;">
+              <span>정답 제출하기</span>
+            </button>
+          </form>
+
+          <div style="margin-top: 18px; text-align: center;">
+            <button type="button" class="btn-text-back" id="toggle-hint-btn" style="color: var(--gold-dark);">💡 힌트가 필요한가요?</button>
+            <div id="hint-container" class="hint-box" style="display: none;">
+              ${mission.hint}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('back-routes-btn').addEventListener('click', () => navigateTo('routes'));
+
+      if (mission.type === 'choice') {
+        const choiceBtns = document.querySelectorAll('.choice-btn');
+        choiceBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            choiceBtns.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            state.selectedChoice = parseInt(btn.getAttribute('data-index'), 10);
+          });
+        });
+      }
+
+      const hintBtn = document.getElementById('toggle-hint-btn');
+      const hintBox = document.getElementById('hint-container');
+      hintBtn.addEventListener('click', () => {
+        hintBox.style.display = hintBox.style.display === 'none' ? 'block' : 'none';
+      });
+
+      document.getElementById('mission-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        validateAnswer(mission);
+      });
+    }
+
+    /* --- 정답 검증 로직 --- */
+    function validateAnswer(mission) {
+      const feedbackEl = document.getElementById('feedback-msg');
+      let isCorrect = false;
+
+      if (mission.type === 'text') {
+        const inputEl = document.getElementById('mission-input');
+        const userVal = inputEl.value.trim().replace(/\s+/g, '');
+        if (!userVal) {
+          showFeedback(feedbackEl, 'error', '정답을 입력해 주세요.');
+          return;
+        }
+        isCorrect = mission.answers.some(ans => ans.replace(/\s+/g, '') === userVal);
+      } else if (mission.type === 'choice') {
+        if (state.selectedChoice === null) {
+          showFeedback(feedbackEl, 'error', '보기 중 하나를 선택해 주세요.');
+          return;
+        }
+        isCorrect = (state.selectedChoice === mission.correctIndex);
+      }
+
+      if (isCorrect) {
+        if (!state.completedMissions.includes(mission.id)) {
+          state.completedMissions.push(mission.id);
+          saveState();
+        }
+        navigateTo('stamp', { missionId: mission.id });
+      } else {
+        showFeedback(feedbackEl, 'error', '아쉽게도 정답이 아닙니다. 현장 단서나 힌트를 다시 확인해보세요!');
+      }
+    }
+
+    function showFeedback(el, type, text) {
+      el.className = `feedback ${type}`;
+      el.textContent = text;
+    }
+
+    /* --- [4] 스탬프 획득 성공 화면 --- */
+    function renderStamp(id) {
+      const mission = MOON_MISSIONS.find(m => m.id === id);
+      const isLast = mission.id === MOON_MISSIONS.length;
+
+      mainEl.innerHTML = `
+        <div class="hanji-card" style="text-align: center;">
+          ${TRAD_CORNERS_SVG}
+          <h2 style="font-family: 'Gowun Batang', serif; font-size: 1.5rem; color: var(--green); margin-bottom: 4px;">🎉 미션 성공!</h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">${mission.title} 스탬프를 획득했습니다.</p>
+
+          <div class="stamp-box">
+            <div class="stamp-icon">${mission.stampIcon}</div>
+            <div class="stamp-title">${mission.stampName}</div>
+            <span style="font-size: 0.75rem; color: var(--gold-dark); margin-top: 4px; font-weight: 700;">문경에코월드 인증</span>
+          </div>
+
+          <button type="button" id="next-btn" class="btn-trad btn-gold" style="justify-content: center; margin-top: 10px;">
+            <span>${isLast ? '🎉 초대장 완성하러 가기' : '다음 코스로 이동'}</span>
+          </button>
+        </div>
+      `;
+
+      document.getElementById('next-btn').addEventListener('click', () => {
+        navigateTo(isLast ? 'complete' : 'routes');
+      });
+    }
+
+    /* --- [5] 최종 완주 및 한가위 초대장 카드 --- */
+    function renderComplete() {
+      const stickersHtml = MOON_MISSIONS.map(m => {
+        const isDone = state.completedMissions.includes(m.id);
+        return `
+          <div class="sticker-item ${isDone ? 'active' : ''}">
+            <div class="icon">${isDone ? m.stampIcon : '❓'}</div>
+            <div>${m.stampName}</div>
+          </div>
+        `;
+      }).join('');
+
+      mainEl.innerHTML = `
+        <div class="hanji-card">
+          ${TRAD_CORNERS_SVG}
+          <div style="text-align: center; margin-bottom: 16px;">
+            <span style="font-size: 0.82rem; color: var(--gold-dark); font-weight: 800;">2026 한가위 특별 미션</span>
+            <h2 style="font-family: 'Gowun Batang', serif; font-size: 1.5rem; color: #0f172a; margin-top: 2px;">한가위 초대장 완성</h2>
+          </div>
+
+          <div style="background: #fff; border: 2px solid var(--gold-primary); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 16px;">
+            <p style="font-size: 1rem; line-height: 1.65; color: #1e293b; word-break: keep-all;">
+              "달빛 우체국에서 보낸 온정이 문경 탄광사택촌에 환히 밝았습니다. 풍성한 <strong style="color: var(--gold-dark);">보름달</strong> 아래, 우리가족 모두의 건강과 행복을 기원합니다."
+            </p>
+            <div style="text-align: right; font-size: 0.82rem; color: var(--text-muted); margin-top: 12px;">
+              - 문경에코월드 달빛 우체국 드림 -
+            </div>
+          </div>
+
+          <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">수집한 달빛 스탬프</div>
+          <div class="sticker-row">${stickersHtml}</div>
+
+          <div class="btn-group">
+            <button type="button" id="share-btn" class="btn-trad btn-gold" style="justify-content: center;">
+              <span>초대장 완주 축하하기</span>
+            </button>
+            <button type="button" id="home-btn" class="btn-trad btn-indigo" style="justify-content: center;">
+              <span>메인으로 돌아가기</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('share-btn').addEventListener('click', () => {
+        alert("한가위 초대장이 완성되었습니다!\n가족 및 지인과 함께 문경에코월드를 즐겨보세요.");
+      });
+      document.getElementById('home-btn').addEventListener('click', () => navigateTo('home'));
+    }
+
+    // 4. 초기화 다이얼로그 모달 제어
+    const resetBtn = document.getElementById('reset-button');
+    const resetDialog = document.getElementById('reset-dialog');
+    const resetCancel = document.getElementById('reset-cancel');
+    const resetConfirm = document.getElementById('reset-confirm');
+
+    resetBtn.addEventListener('click', () => resetDialog.showModal());
+    resetCancel.addEventListener('click', () => resetDialog.close());
+    resetConfirm.addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      state.completedMissions = [];
+      resetDialog.close();
+      navigateTo('home');
+    });
+
+    document.getElementById('brand-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('home');
+    });
+
+    // 상단 실시간 시간 업데이트
+    function updateDateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const date = now.getDate();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? '오후' : '오전';
+      hours = hours % 12 || 12;
+      
+      const timeStr = `📅 ${year}. ${month}. ${date}. ${ampm} ${hours}:${minutes}`;
+      document.getElementById('current-date-time').textContent = timeStr;
+    }
+
+    // 초기화 실행
+    updateDateTime();
+    loadState();
+    render();
+  </script>
+</body>
+</html>
