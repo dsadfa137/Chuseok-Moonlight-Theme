@@ -1,0 +1,27 @@
+[hidden]{display:none!important}
+.nickname-card{padding:30px 25px;text-align:left}
+.nickname-card h2{font-size:1.25rem;line-height:1.5;margin:0 0 22px;text-align:center}
+.nickname-card .format-note{margin-bottom:12px}.nickname-card small{font-size:.8rem;font-weight:400}
+.nickname-card .input{font-size:1rem}.nickname-card #last4-input{font-size:.85rem}
+.privacy-check{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;line-height:1.7;margin:20px 0 12px;cursor:pointer}
+.privacy-check input{width:22px;height:22px;flex:0 0 22px;margin:2px 0 0;accent-color:#96712e}
+.mission-timer{padding:12px 18px;background:#203750;color:#fff0c2;font-size:.82rem;text-align:center;font-variant-numeric:tabular-nums;border-bottom:1px solid #bc9b54}
+.network-note{font-size:.83rem;line-height:1.6}.network-note .text-button{display:block;min-height:38px;padding:5px 0}
+.rank-button{width:100%;margin:16px 0}.rank-dialog{width:min(680px,calc(100% - 20px));max-width:none;max-height:calc(100dvh - 24px);overflow:auto;padding:24px 18px;background:#fdfbf7;color:#182b3e;border:2px solid #b69a55;border-radius:14px}
+.rank-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px}.rank-toolbar h2{font-size:1.2rem;margin:0}
+.rank-toolbar button{min-width:44px;min-height:44px;border:1px solid #b69a55;background:#f5ecd3;border-radius:8px;color:#25334b}
+.rank-mine{padding:16px;border:1px solid #d4af37;border-radius:8px;background:#fbefc8;font-weight:800;margin:18px 0}
+.rank-scroll{overflow:auto}.rank-table{border-collapse:collapse;width:100%;font-size:.83rem;font-variant-numeric:tabular-nums}
+.rank-table th,.rank-table td{padding:12px 6px;border-bottom:1px solid #d8d0bb;text-align:left;word-break:keep-all}
+.rank-table th{color:#294157}.rank-table .my-row{background:#f9edc7;font-weight:800}.rank-status{font-size:.78rem;color:#5f594e;margin:15px 0}
+.rank-dialog .secondary{width:100%}
+.admin-body{display:block;min-height:100vh;padding:24px 16px;background:linear-gradient(145deg,#0f172a,#1e293b);color:#25334b}
+.admin-shell{max-width:1200px;margin:0 auto;background:#fdfbf7;padding:28px;border:1px solid #d4af37;border-radius:14px}
+.admin-shell h1{font-size:1.7rem}.admin-shell h2{font-size:1.15rem}.admin-intro{color:#675c48;font-size:.88rem}
+.admin-login{max-width:400px}.admin-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0}.admin-actions .primary,.admin-actions .secondary{width:auto}
+.admin-summary{background:#f6ecd2;padding:15px;border-radius:8px}.admin-table{min-width:980px;width:100%;border-collapse:collapse;font-size:.85rem}.admin-table td,.admin-table th{padding:12px 8px;border-bottom:1px solid #d8d0bb;text-align:left}
+.admin-table button{padding:8px 12px;min-height:40px;border:1px solid #8f7542;border-radius:6px;color:#273c54;background:#f6ecd2;white-space:nowrap}.admin-table .removed{color:#797269;background:#eeece6}
+.admin-alert{white-space:pre-line;font-size:.9rem;color:#74471d;min-height:26px}.admin-table caption{text-align:left;margin:18px 0 10px;font-weight:bold}
+.export-choice{display:flex;align-items:center;gap:8px;font-size:.85rem}.export-choice input{width:20px;height:20px}
+@media(max-width:420px){.nickname-card{padding:28px 20px}.intro-form{padding-left:16px;padding-right:16px}.rank-dialog{padding:20px 12px}.rank-table{font-size:.75rem}.rank-table th,.rank-table td{padding:10px 4px}.admin-shell{padding:18px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
